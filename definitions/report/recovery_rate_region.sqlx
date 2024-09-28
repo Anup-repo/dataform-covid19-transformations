@@ -1,0 +1,25 @@
+config {
+    type: "view",
+    schema: "covid_data",
+    name: "recovery_rate_by_regions",
+    description: "rank all the region based on the confirmed case on a sepcific date",
+}
+
+SELECT
+  subregion1_name AS region,
+  SUM(new_confirmed) AS total_new_confirmed,
+  SUM(new_deceased) AS total_new_deceased,
+  SUM(new_recovered) AS total_new_recovered,
+  MAX(cumulative_confirmed) AS total_confirmed,
+  MAX(cumulative_deceased) AS total_deceased,
+  MAX(cumulative_recovered) AS total_recovered,
+  ROUND(AVG(new_recovered) / NULLIF(AVG(cumulative_confirmed), 0) * 100, 2) AS avg_recovery_speed,
+  (MAX(cumulative_recovered) / NULLIF(MAX(cumulative_confirmed), 0)) * 100 AS recovery_rate
+FROM
+  ${ref("india_records")}
+WHERE
+  subregion1_name IS NOT NULL
+GROUP BY
+  subregion1_name
+ORDER BY
+  avg_recovery_speed DESC

@@ -1,0 +1,20 @@
+config {
+    type: "view",
+    schema: "covid_data",
+    name: "all_country_records",
+    description: "get the covid_data for all countries",
+}
+
+SELECT
+  country_name,
+  SUM(cumulative_confirmed) AS total_confirmed,
+  SUM(cumulative_deceased) AS total_deceased,
+  SUM(cumulative_recovered) AS total_recovered
+FROM
+  ${ref("covid19_open_data")}
+GROUP BY
+  country_name
+ORDER BY
+  total_confirmed desc
+LIMIT
+  15

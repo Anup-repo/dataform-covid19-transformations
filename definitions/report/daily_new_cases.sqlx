@@ -1,0 +1,35 @@
+config {
+    type: "view",
+    schema: "covid_data",
+    name: "daily_newcase_in_country",
+    description: "get the daily covid_data for India in January",
+}
+
+WITH daily_increase AS (
+  SELECT
+    country_name,
+    date,
+    cumulative_confirmed,
+    LAG(cumulative_confirmed) OVER (PARTITION BY country_name ORDER BY date) AS previous_day_confirmed
+  FROM
+   ${ref("india_records")}
+  WHERE
+    subregion1_name IS NULL
+)
+
+SELECT
+  country_name,
+  date,
+  MAX(cumulative_confirmed) AS cumulative_confirmed,
+  IFNULL(MAX(cumulative_confirmed) - MAX(previous_day_confirmed), 0) AS daily_new_cases
+FROM
+  daily_increase
+WHERE
+  date >= "2022-01-01"
+  AND date < "2022-02-01"
+  AND cumulative_confirmed IS NOT NULL
+GROUP BY
+  country_name,
+  date
+ORDER BY
+  date

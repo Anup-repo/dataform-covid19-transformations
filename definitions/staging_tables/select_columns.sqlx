@@ -1,0 +1,25 @@
+config {
+  type: "table",
+  schema: "covid_data",
+  name: "filtered_covid",
+  description: "out of 701 columns select the required columns",
+  columns: doc.columnDescriptions
+}
+
+SELECT
+  date,
+  country_code,
+  country_name,
+  subregion1_name,
+  new_confirmed,
+  new_deceased,
+  new_recovered,
+  cumulative_confirmed,
+  cumulative_deceased,
+  cumulative_recovered
+FROM
+  ${ref("covid19_open_data")}
+ORDER BY
+  date DESC
+LIMIT
+  100

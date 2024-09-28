@@ -1,0 +1,19 @@
+config {
+    type: "view",
+    schema: "covid_data",
+    name: "rank_country_by_cases",
+    description: "rank all the country based on the confirmed case on a sepcific date",
+}
+
+SELECT
+  country_name,
+  cumulative_confirmed,
+  RANK() OVER (ORDER BY cumulative_confirmed DESC) AS rank_by_cases
+FROM
+  ${ref("covid19_open_data")}
+WHERE
+  date = "2022-04-02"
+ORDER BY
+  rank_by_cases
+LIMIT 
+  15
