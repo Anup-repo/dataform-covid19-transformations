@@ -21,5 +21,3 @@ FROM
   ${ref("covid19_open_data")}
 ORDER BY
   date DESC
-LIMIT
-  100

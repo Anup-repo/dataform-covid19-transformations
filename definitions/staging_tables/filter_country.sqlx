@@ -23,5 +23,3 @@ where
   AND date between "2022-01-01" AND "2022-12-31"
 ORDER BY
   date DESC
-LIMIT
-  100
