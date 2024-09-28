@@ -15,5 +15,3 @@ WHERE
   date = "2022-04-02"
 ORDER BY
   rank_by_cases
-LIMIT 
-  15

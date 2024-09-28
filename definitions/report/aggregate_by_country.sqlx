@@ -16,5 +16,3 @@ GROUP BY
   country_name
 ORDER BY
   total_confirmed desc
-LIMIT
-  15
