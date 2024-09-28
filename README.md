@@ -29,7 +29,7 @@ This repository includes examples of the following Dataform SQL operations:
 ### Running the Transformations
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YOUR-USERNAME/dataform-covid19-transformations.git
+   git clone https://github.com/Anup-repo/dataform-covid19-transformations.git
 2. Install Dataform dependencies:
    ```bash
    dataform install
